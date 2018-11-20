@@ -31,18 +31,16 @@ before_install:
 - echo 'count=0' > /home/travis/.android/repositories.cf
 
 install:
-- yes | sdkmanager "ndk-bundle"
+- yes | sdkmanager "ndk-bundle" > /dev/null
 
 jobs:
   include:
-  - stage: check
-    script: "assembleDebug"
-  - stage: test
-    script: "debugUnitTest"
-  - stage: test
-    script: "lint"
-  - stage: test
-    script: "ktlintCheck"
+  - stage: Prepare libpng
+    script: "cd ${TRAVIS_BUILD_DIR} && cat libpng_version | xargs ./download_libpng_and_apply_apng_patch.sh"
+  - stage: Build
+    script: "cd ${TRAVIS_BUILD_DIR} && ./gradlew assembleDebug"
+  - stage: Test
+    script: "cd ${TRAVIS_BUILD_DIR} && ./gradlew :apng-drawable:testDebugUnitTest :apng-drawable:lint :apng-drawable:ktlintCheck"
   - stage: deploy
     script: 'deploy'
 
