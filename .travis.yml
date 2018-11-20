@@ -35,6 +35,7 @@ install:
 
 before_script:
 - export ANDROID_NDK_HOME=$ANDROID_HOME/ndk-bundle
+- cd ${TRAVIS_BUILD_DIR} && cat libpng_version | xargs ./download_libpng_and_apply_apng_patch.sh
 
 script:
 - cd ${TRAVIS_BUILD_DIR} && ./gradlew assembleDebug :apng-drawable:testDebugUnitTest :apng-drawable:lint :apng-drawable:ktlintCheck
