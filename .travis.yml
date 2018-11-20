@@ -15,23 +15,13 @@ cache:
 notifications:
   email: false
 
-android:
-  components:
-  - build-tools-28.0.3
-  - android-28
-  - extra-android-support
-  - extra-google-m2repository
-  - ndk-bundle
-  licenses:
-  - '.+'
-
 env:
   global:
   - DIR=apng-drawable
   - GRADLE_USER_HOME="${TRAVIS_BUILD_DIR}/gradle"
 
 before_install:
-- echo 'count=0' > /home/travis/.android/repositories.cf
+- sdkmanager "build-tools-28.0.3" "platform;android-28" "extras;google;m2repository" "ndk-bundle"
 
 jobs:
   include:
