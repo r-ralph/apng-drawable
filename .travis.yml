@@ -33,12 +33,25 @@ before_install:
 install:
 - yes | sdkmanager "ndk-bundle"
 
-before_script:
-- export ANDROID_NDK_HOME=$ANDROID_HOME/ndk-bundle
-- cd ${TRAVIS_BUILD_DIR} && cat libpng_version | xargs ./download_libpng_and_apply_apng_patch.sh
+jobs:
+  include:
+  - stage: check
+    script: "assembleDebug"
+  - stage: test
+    script: "debugUnitTest"
+  - stage: test
+    script: "lint"
+  - stage: test
+    script: "ktlintCheck"
+  - stage: deploy
+    script: 'deploy'
 
-script:
-- cd ${TRAVIS_BUILD_DIR} && ./gradlew assembleDebug :apng-drawable:testDebugUnitTest :apng-drawable:lint :apng-drawable:ktlintCheck
-
-after_script:
-- cat ${TRAVIS_BUILD_DIR}/${DIR}/*/build/reports/lint-results.xml
+#before_script:
+#- export ANDROID_NDK_HOME=$ANDROID_HOME/ndk-bundle
+#- cd ${TRAVIS_BUILD_DIR} && cat libpng_version | xargs ./download_libpng_and_apply_apng_patch.sh
+#
+#script:
+#- cd ${TRAVIS_BUILD_DIR} && ./gradlew assembleDebug :apng-drawable:testDebugUnitTest :apng-drawable:lint :apng-drawable:ktlintCheck
+#
+#after_script:
+#- cat ${TRAVIS_BUILD_DIR}/${DIR}/*/build/reports/lint-results.xml
