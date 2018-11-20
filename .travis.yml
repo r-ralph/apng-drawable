@@ -21,6 +21,7 @@ android:
   - android-28
   - extra-android-support
   - extra-google-m2repository
+  - ndk-bundle
 
 env:
   global:
@@ -29,9 +30,6 @@ env:
 
 before_install:
 - echo 'count=0' > /home/travis/.android/repositories.cf
-
-install:
-- yes | sdkmanager "ndk-bundle" > /dev/null
 
 jobs:
   include:
