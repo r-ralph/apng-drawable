@@ -22,25 +22,26 @@ env:
 
 before_install:
 - echo 'count=0' > /home/travis/.android/repositories.cfg
+
+install:
 - yes | sdkmanager "build-tools;28.0.3" "platforms;android-28" "extras;google;m2repository" "ndk-bundle" > /dev/null
 
-jobs:
-  include:
-  - stage: Prepare libpng
-    script: "cd ${TRAVIS_BUILD_DIR} && cat libpng_version | xargs ./download_libpng_and_apply_apng_patch.sh"
-  - stage: Build
-    script: "cd ${TRAVIS_BUILD_DIR} && ./gradlew assembleDebug"
-  - stage: Test
-    script: "cd ${TRAVIS_BUILD_DIR} && ./gradlew :apng-drawable:testDebugUnitTest :apng-drawable:lint :apng-drawable:ktlintCheck"
-  - stage: deploy
-    script: 'deploy'
+#jobs:
+#  include:
+#  - stage: Prepare libpng
+#    script: "cd ${TRAVIS_BUILD_DIR} && cat libpng_version | xargs ./download_libpng_and_apply_apng_patch.sh"
+#  - stage: Build
+#    script: "cd ${TRAVIS_BUILD_DIR} && ./gradlew assembleDebug"
+#  - stage: Test
+#    script: "cd ${TRAVIS_BUILD_DIR} && ./gradlew :apng-drawable:testDebugUnitTest :apng-drawable:lint :apng-drawable:ktlintCheck"
+#  - stage: deploy
+#    script: 'deploy'
 
-#before_script:
-#- export ANDROID_NDK_HOME=$ANDROID_HOME/ndk-bundle
-#- cd ${TRAVIS_BUILD_DIR} && cat libpng_version | xargs ./download_libpng_and_apply_apng_patch.sh
-#
-#script:
-#- cd ${TRAVIS_BUILD_DIR} && ./gradlew assembleDebug :apng-drawable:testDebugUnitTest :apng-drawable:lint :apng-drawable:ktlintCheck
-#
+before_script:
+- cd ${TRAVIS_BUILD_DIR} && cat libpng_version | xargs ./download_libpng_and_apply_apng_patch.sh
+
+script:
+- cd ${TRAVIS_BUILD_DIR} && ./gradlew assembleDebug :apng-drawable:testDebugUnitTest :apng-drawable:lint :apng-drawable:ktlintCheck
+
 #after_script:
 #- cat ${TRAVIS_BUILD_DIR}/${DIR}/*/build/reports/lint-results.xml
