@@ -307,7 +307,7 @@ class ApngDrawable @VisibleForTesting internal constructor(
      */
     fun recycle() = apngState.apng.recycle()
 
-    private fun progressAnimationElapsedTime() {
+    private fun progressAnimationElapsedTime()      {
         val lastFrame = currentFrameIndex
         val currentTimeMillis = apngState.currentTimeProvider.invoke()
         val animationPrevDrawTimeMillisSnapShot = animationPrevDrawTimeMillis
