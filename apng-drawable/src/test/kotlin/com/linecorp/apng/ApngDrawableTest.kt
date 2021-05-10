@@ -91,7 +91,7 @@ class ApngDrawableTest {
             eq(0),
             eq(canvas),
             anyOrNull(),
-            eq(Rect(0, 0, 2000, 100)),
+            eq(Rect(0, 0, 200, 100)),
             any()
         )
     }
