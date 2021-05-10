@@ -29,6 +29,7 @@ import android.view.animation.AnimationUtils
 import androidx.annotation.DrawableRes
 import androidx.annotation.IntRange
 import androidx.annotation.RawRes
+import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat
@@ -348,6 +349,7 @@ class ApngDrawable @VisibleForTesting internal constructor(
         }
     }
 
+    @RequiresApi(30)
     private fun isFirstFrame(): Boolean = currentFrameIndex == 0
 
     private fun isLastFrame(): Boolean = currentFrameIndex == frameCount - 1
